@@ -1,4 +1,5 @@
 import type { Question } from "./types";
+import { shuffleArray } from "./utils";
 
 type Props = {
   amount: number;
@@ -17,7 +18,10 @@ const mapToQuestions = (data: any[]) => {
   const questions: Question[] = data.map((item) => {
     const formattedQuestion: Question = {
       ...item,
-      answer: [...item.incorrect_answers, item.correct_answer],
+      answers: shuffleArray<string>([
+        ...item.incorrect_answers,
+        item.correct_answer,
+      ]),
     };
     return formattedQuestion;
   });

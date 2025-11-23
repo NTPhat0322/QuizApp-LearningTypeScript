@@ -3,7 +3,7 @@ export interface Question {
   difficulty: string;
   category: string;
   question: string;
-  answer: string;
+  answers: string[];
   correct_answer: string;
   incorrect_answers: string[];
 }

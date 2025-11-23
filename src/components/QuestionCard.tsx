@@ -1,11 +1,22 @@
-export const QuestionCard = () => {
+import type { Question } from "../types";
+
+type Props = {
+  index: number;
+  questionObject: Question;
+  checkAnswer: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
+
+export const QuestionCard = ({ index, questionObject, checkAnswer }: Props) => {
   return (
     <div className="question-card">
-      <h5>Question: 1</h5>
-      <h4 className="question">Is Tien Phat handsome?</h4>
+      <h5>Question: {index + 1}</h5>
+      <h4 className="question">{questionObject.question}</h4>
       <div className="answers">
-        <button>True</button>
-        <button>False</button>
+        {questionObject.answers.map((answer, i) => (
+          <button key={i} value={answer} onClick={checkAnswer}>
+            {answer}
+          </button>
+        ))}
       </div>
     </div>
   );

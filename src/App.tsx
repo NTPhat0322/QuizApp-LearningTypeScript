@@ -36,6 +36,34 @@ function App() {
     }
   };
 
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const answer = e.currentTarget.value;
+    const correct = questions[index].correct_answer;
+    if (correct === answer) setScore((prev) => prev + 1);
+
+    //save user answer object
+    const userAnswerObject: UserAnswer = {
+      question: questions[index].question,
+      correctAnswer: correct,
+      answer: answer,
+      correct: correct === answer,
+    };
+    setUserAnswers((prev) => [...prev, userAnswerObject]);
+
+    if (index + 1 === TOTAL_QUESTIONS) {
+      resetQuiz();
+      return;
+    }
+    setIndex((prev) => prev + 1);
+  };
+
+  const resetQuiz = () => {
+    setGameOver(true);
+    setQuestions(() => []);
+    setIndex(0);
+    setScore(0);
+    setUserAnswers([]);
+  };
   return (
     <div>
       <h3 className="app-name">Quiz App</h3>
@@ -45,7 +73,14 @@ function App() {
         score={score}
         loading={loading}
       />
-      <QuestionCard />
+      {/* cau hoi chi hien khi not game over && not loading && questions.length > 0 */}
+      {!gameOver && !loading && questions.length > 0 && (
+        <QuestionCard
+          questionObject={questions[index]}
+          index={index}
+          checkAnswer={checkAnswer}
+        />
+      )}
     </div>
   );
 }
