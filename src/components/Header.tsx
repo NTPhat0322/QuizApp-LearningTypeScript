@@ -1,12 +1,21 @@
 type Props = {
   score: number;
+  gameOver: boolean;
+  loading: boolean;
+  startQuiz: () => void;
 };
 
-export const QuestionHeader = ({ score }: Props) => {
+export const QuestionHeader = ({
+  score,
+  gameOver,
+  loading,
+  startQuiz,
+}: Props) => {
   return (
     <div className="header">
-      <h4 className="score">Score: {score}</h4>
-      <p>Loading...</p>
+      {gameOver && <button onClick={startQuiz}>Start quiz</button>}
+      {loading && <p>Loading...</p>}
+      {!gameOver && !loading && <p className="score">Score: {score}</p>}
     </div>
   );
 };
